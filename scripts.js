@@ -1,32 +1,50 @@
-const cards = document.querySelectorAll('.memory-card');
+const cards = document.querySelectorAll('.memory-card')
 
 let hasFlippedCard = false;
 let firstCard, secondCard;
 
 function flipCard() {
-  this.classList.add('flip');
+  this.classList.toggle('flip');
 
   if (!hasFlippedCard) {
-    // first click
-    hasFlippedCard = true;
-    firstCard = this;
+      // first click
+     hasFlippedCard = true;
+     firstCard = this;
+
+     return;
+    
   } else {
-    // second click
+    //second click
     hasFlippedCard = false;
     secondCard = this;
 
-    if (firstCard.dataset.framework === secondCard.dataset.framework) {
-      // it's a match!
-      firstCard.removeEventListener('click', flipCard);
-      secondCard.removeEventListener('click', flipCard);
-    } else {
-      // not a match
-      setTimeout(() => {
-        firstCard.classList.remove('flip');
-        secondCard.classList.remove('flip');
-      }, 1500);
+    checkForMatch();
     }
-  }
 }
 
-cards.forEach(card => card.addEventListener('click', flipCard));
+function checkForMatch() {
+      // do cards match?
+    let isMatch = firstCard.dataset.framework === secondCard.dataset.framework;
+      isMatch ? disableCards() : unflipCards(); 
+    //if (firstCard.dataset.framework === secondCard.dataset.framework) {
+      // disableCards();
+    //} else {
+     //  unflipCards();
+}
+
+function disableCards() {
+   // it' s match!!
+    firstCard.removeEventListener('click', flipCard);
+    secondCard.removeEventListener('click', flipCard); 
+}
+
+function unflipCards() {
+    // not a match
+    setTimeout(() => {
+      firstCard.classList.remove('flip');
+      secondCard.classList.remove('flip');
+ }, 1500);
+
+}
+
+cards.forEach(card => card.addEventListener("click", flipCard));
