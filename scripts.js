@@ -53,4 +53,18 @@ function resetBoard() {
   [firstCard, secondCard] = [null, null];
 }
 
+// IIFE (Immediately Invoked Function Expression)
+/*
+(function () {
+   statements
+})();
+
+*/
+(function shuffle() {
+  cards.forEach(card => {
+    let radomPos = Math.floor(Math.random() * 12)
+    card.style.order = radomPos;
+  });
+})();
+
 cards.forEach(card => card.addEventListener("click", flipCard));
